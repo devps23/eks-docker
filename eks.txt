@@ -1,0 +1,6 @@
+* create a eks cluster
+* grant policies for eks cluster
+* create a node group in an eks cluster and create an instance through autoscaling group
+* grant policies
+* create a nodes in node group
+* grant policies

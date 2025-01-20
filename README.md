@@ -1,1 +1,1 @@
-# eks-docker
+# eks-practice

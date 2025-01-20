@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: initcontainerC
+spec:
+  initContainers:
+    - name: nginx
+      image: pavanidevops78/kubernetes:v1
+      volumeMounts:
+        - name: image-path
+          mountPath: /usr/share/nginx/html
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - name: image-path
+          mountPath: /usr/share/nginx/html
+  volumes:
+    - name: image-path
+      emptyDir: {}
