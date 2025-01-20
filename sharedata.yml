@@ -10,7 +10,7 @@ spec:
         - name: nginx-path
           mountPath: /usr/share/nginx/html
     - name: nginx-content
-      image: pavanidevops78/kubernetes:v1
+      image: pavanidevops78/kubernetes:v2
       volumeMounts:
         - name: nginx-path
           mountPath: /usr/share/nginx/html
