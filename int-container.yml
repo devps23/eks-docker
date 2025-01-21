@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-04
+  name: example-init
 spec:
   containers:
     - name: nginx
@@ -10,12 +10,11 @@ spec:
         - name: nginx-path
           mountPath: /usr/share/nginx/html
   initContainers:
-    - name: nginx-content
-      image: pavanidevops78/kubernetes:v2
+    - name: image-content
+      image: pavanidevops78/kubernetes:v4
       volumeMounts:
         - name: nginx-path
           mountPath: /usr/share/nginx/html
-
   volumes:
     - name: nginx-path
       emptyDir: {}
