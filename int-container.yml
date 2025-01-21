@@ -11,10 +11,11 @@ spec:
           mountPath: /usr/share/nginx/html
   initContainers:
     - name: nginx-content
-      image: pavanidevops78/kubernetes:v4
+      image: pavanidevops78/kubernetes:v2
       volumeMounts:
         - name: nginx-path
           mountPath: /usr/share/nginx/html
+
   volumes:
     - name: nginx-path
       emptyDir: {}
