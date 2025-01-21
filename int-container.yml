@@ -3,18 +3,18 @@ kind: Pod
 metadata:
   name: pod-04
 spec:
-  initContainers:
-    - name: nginx-content
-      image: pavanidevops78/kubernetes:v2
-      volumeMounts:
-        - name: image-path
-          mountPath: /usr/share/nginx/html
   containers:
     - name: nginx
       image: nginx
       volumeMounts:
-        - name: image-path
+        - name: nginx-path
+          mountPath: /usr/share/nginx/html
+  initContainers:
+    - name: nginx-content
+      image: pavanidevops78/kubernetes:v2
+      volumeMounts:
+        - name: nginx-path
           mountPath: /usr/share/nginx/html
   volumes:
-    - name: image-path
+    - name: nginx-path
       emptyDir: {}
