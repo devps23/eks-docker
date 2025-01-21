@@ -4,3 +4,27 @@
 * grant policies
 * create a nodes in node group
 * grant policies
+* autoscaling group increase or decrease an instance creating based on capacity
+* required ami image so we need to create a launch template in the node group
+* kms and ec2 instances are the services and autoscaling group is not a service , so in kms under "key users" add "AWSServiceRoleForAutoScaling"
+then kms allow in an ec2 instances.(KMS communicate to ASG through "key users".
+
+EKS Control Plane:
+===================
+Managed by AWS: Includes the Kubernetes API server, etcd (key-value store), controller manager, and scheduler.
+Purpose: Manages the overall state and lifecycle of the Kubernetes cluster, making decisions about where and how to run workloads.
+
+EKS Cluster:
+=============
+Includes Control Plane and Worker Nodes: The control plane is part of the EKS cluster, but the cluster also includes your worker nodes (EC2 instances or Fargate tasks).
+
+Purpose: Runs your containerized applications and services. The control plane schedules workloads to the worker nodes.
+
+kubectl: is the command-line tool for interacting with Kubernetes clusters
+kubectl won't be able to communicate with the EKS cluster
+kubeconfig: Use the AWS CLI to update the kubeconfig file with your EKS cluster details.
+aws eks --region <region> update-kubeconfig --name <cluster_name>
+aws eks update-kubeconfig --name "cluster-name"
+kubectl get pods
+kubectl get pods -A
+
