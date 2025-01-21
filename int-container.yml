@@ -5,7 +5,7 @@ metadata:
 spec:
   initContainers:
     - name: nginx-content
-      image: pavanidevops78/kubernetes:v1
+      image: pavanidevops78/kubernetes:v2
       volumeMounts:
         - name: image-path
           mountPath: /usr/share/nginx/html
