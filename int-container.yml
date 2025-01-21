@@ -4,7 +4,7 @@ metadata:
   name: pod-04
 spec:
   initContainers:
-    - name: nginx
+    - name: nginx-content
       image: pavanidevops78/kubernetes:v1
       volumeMounts:
         - name: image-path
