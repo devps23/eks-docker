@@ -28,3 +28,16 @@ aws eks update-kubeconfig --name "cluster-name"
 kubectl get pods
 kubectl get pods -A
 
+--------------------------------------------------------------------------------------
+store secrets in a vault
+
+1. export vault_token=
+2.export VAULT_ADDR=
+3.export
+4.vault login
+5.vault kv get "common/common"
+docker build .
+docker run -it -entrypoint -e vault_token= -e vault_addr=  "build image"
+
+
+
