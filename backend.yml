@@ -17,6 +17,8 @@ spec:
               key: token
         - name: SECRET_NAME
           value: common/vault
+        - name: VAULT_SKIP_VERIFY
+          value: "true"
       volumeMounts:
         - name: vault-secret
           mountPath: /data
