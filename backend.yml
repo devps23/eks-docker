@@ -5,7 +5,7 @@ metadata:
 spec:
   initContainers:
     - name: hashivault
-      image: public.ecr.aws/u4j6q5s8/kubernetes-init-container:1.0
+      image: pavanidevops78/kubernetes:1.1
       env:
         - name: VAULT_ADDR
           value: https://54.167.202.14:8200
@@ -21,7 +21,7 @@ spec:
           mountPath: /data
   containers:
     - name: backend
-      image: public.ecr.aws/u4j6q5s8/expense-backend:v1
+      image: pavanidevops78/kubernetes:1.0
       volumeMounts:
         - name: vault-secret
           mountPath: /data
