@@ -6,7 +6,7 @@ metadata:
 spec:
   initContainers:
     - name: hashivault
-      image: pavanidevops78/kubernetes:1.1
+      image: docker.io/pavanidevops78/kubernetes:1.1
       env:
         - name: VAULT_ADDR
           value: https://34.207.214.80:8200
@@ -24,7 +24,7 @@ spec:
           mountPath: /data
   containers:
     - name: backend
-      image: pavanidevops78/kubernetes:1.0
+      image: docker.io/pavanidevops78/kubernetes:1.0
       volumeMounts:
         - name: vault-secret
           mountPath: /data
