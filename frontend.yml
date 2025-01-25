@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  labels:
+    appName: frontend
+    projectName: expense
+spec:
+  containers:
+    - name: frontend
+      image:
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    appName: frontend
+    projectName: expense
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
