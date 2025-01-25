@@ -25,16 +25,16 @@ spec:
   type: ClusterIP
 
 ---
-#apiVersion: v1
-#kind: Pod
-#metadata:
-#  name: pod-01
-#  labels:
-#    appName: nginx
-#spec:
-#  containers:
-#    - name: nginx
-#      image:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-01
+  labels:
+    appName: nginx
+spec:
+  containers:
+    - name: nginx
+      image: pavanidevops78/kubernetes:1.7
 
 # curl nginx
 
