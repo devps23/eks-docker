@@ -9,7 +9,7 @@ spec:
       image: docker.io/pavanidevops78/kubernetes:1.6
       env:
         - name: VAULT_ADDR
-          value: https://34.207.214.80:8200
+          value: https:/vault-internal.pdevops72.online:8200
         - name: VAULT_TOKEN
           valueFrom:
             secretKeyRef:
@@ -22,7 +22,7 @@ spec:
       volumeMounts:
         - name: vault-secret
           mountPath: /data
-    - name: backend-schema
+    - name: schema
       image: pavanidevops78/kubernetes:1.9
       volumeMounts:
         - name: vault-secret
