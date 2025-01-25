@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: frontend
-      image:
+      image: pavanidevops78/kubernetes:2.3
 
 ---
 apiVersion: v1
