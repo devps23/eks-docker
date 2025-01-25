@@ -23,7 +23,7 @@ spec:
         - name: vault-secret
           mountPath: /data
     - name: backend-schema
-      image: docker build -t pavanidevops78/kubernetes:1.8
+      image: pavanidevops78/kubernetes:1.8
       volumeMounts:
         - name: vault-secret
           mountPath: /data
