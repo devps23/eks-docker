@@ -31,7 +31,7 @@ spec:
 
   containers:
     - name: backend
-      image: docker.io/pavanidevops78/kubernetes:1.5
+      image:  pavanidevops78/kubernetes:1.7
       volumeMounts:
         - name: vault-secret
           mountPath: /data
