@@ -115,7 +115,7 @@ resource "aws_iam_role" "iam_node_role" {
 # to grant policy in an eks cluster
 resource "aws_iam_role" "node-group-role" {
   name = "${var.env}-${var.component}-node-grp-role"
-  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.id
+  assume_role_policy = aws_iam_role.iam_node_role.arn
 }
 # the below policy for to interact with eks cluster
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
@@ -133,7 +133,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 # create a nodes in node group and iam role
 resource "aws_iam_role" "node" {
   name              = "${var.env}-${var.component}-node"
- assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.id
+ assume_role_policy = aws_iam_role.iam_node_role.arn
 }
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodeMinimalPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodeMinimalPolicy"
