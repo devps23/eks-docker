@@ -4,13 +4,13 @@ data "aws_ami" "ami" {
   owners           = ["973714476881"]
 }
 # get existing assume role policy from service
-data "aws_iam_policy_document" "instance_assume_role_policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
-}
+# data "aws_iam_policy_document" "instance_assume_role_policy" {
+#   statement {
+#     actions = ["sts:AssumeRole"]
+#
+#     principals {
+#       type        = "Service"
+#       identifiers = ["ec2.amazonaws.com"]
+#     }
+#   }
+# }

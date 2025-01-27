@@ -34,17 +34,7 @@ resource "aws_security_group" "security" {
     Name = "sg-${var.component}-eks"
   }
 }
-# create a cluster role and policy
-# resource "aws_iam_role" "eks-cluster-role" {
-#   name               = "${var.env}-instance-role"
-#   assume_role_policy = aws_iam_role.eks-cluster-role.arn
-#   tags = {
-#     Name = "${var.env}-cluster-role"
-#   }
-# }
 
-# create a node group and node group policy
-# attach launch template in node group
 # resource "aws_eks_node_group" "eks-node-group" {
 #   cluster_name    = aws_eks_cluster.eks-cluster.name
 #   node_group_name = "${var.env}-${var.component}-nodegrp"
@@ -68,6 +58,8 @@ resource "aws_security_group" "security" {
 #     Name = "${var.env}-${var.component}-nodegrp"
 #   }
 # }
+# create a node group and node group policy
+# attach launch template in node group
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
   node_group_name = "${var.env}-eks-ng"
@@ -77,7 +69,7 @@ resource "aws_eks_node_group" "main" {
   instance_types  = ["t3.medium"]
 
     launch_template {
-      name    = "eks-${var.env}"
+      name    = "${var.env}-${var.component}-template"
       version = "$Latest"
     }
 
@@ -95,37 +87,6 @@ resource "aws_eks_node_group" "main" {
   }
 }
 
-# # to grant policy in an eks cluster
-# resource "aws_iam_role" "node-group-role" {
-#   name = "${var.env}-${var.component}-node-grp-role"
-#   assume_role_policy = aws_iam_role.iam_node_role.arn
-# }
-# # the below policy for to interact with eks cluster
-# resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-#   role       = aws_iam_role.eks-cluster-role.name
-# }
-# resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-#   role       = aws_iam_role.eks-cluster-role.name
-# }
-# resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-#   role       = aws_iam_role.eks-cluster-role.name
-# }
-# # create a nodes in node group and iam role
-# resource "aws_iam_role" "node" {
-#   name              = "${var.env}-${var.component}-node"
-#  assume_role_policy = aws_iam_role.iam_node_role.arn
-# }
-# resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodeMinimalPolicy" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodeMinimalPolicy"
-#   role       = aws_iam_role.node.name
-# }
-# resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryPullOnly" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly"
-#   role       = aws_iam_role.node.name
-# }
 # create a launch template for ami
 resource "aws_launch_template" "launch_template" {
   name = "${var.env}-${var.component}-template"
