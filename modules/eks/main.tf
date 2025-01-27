@@ -37,7 +37,7 @@ resource "aws_security_group" "security" {
 # create a cluster role and policy
 resource "aws_iam_role" "eks-cluster-role" {
   name               = "${var.env}-instance-role"
-  assume_role_policy = aws_iam_role. eks-cluster-role.arn
+  assume_role_policy = aws_iam_role.eks-cluster-role.arn
   tags = {
     Name = "${var.env}-cluster-role"
   }
