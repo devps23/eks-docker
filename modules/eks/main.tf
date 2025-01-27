@@ -81,7 +81,7 @@ resource "aws_eks_node_group" "main" {
   instance_types  = ["t3.medium"]
 
     launch_template {
-      name    = "eks-${var.env}"
+      name    = aws_launch_template.launch_template.name
       version = "$Latest"
     }
 
