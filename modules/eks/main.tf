@@ -93,7 +93,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 # create a nodes in node group and iam role
 resource "aws_iam_role" "node" {
   name              = "${var.env}-${var.component}-node"
- assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.id
+ assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
 }
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodeMinimalPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodeMinimalPolicy"
