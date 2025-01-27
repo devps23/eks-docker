@@ -49,27 +49,53 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
 }
 # create a node group and node group policy
 # attach launch template in node group
-resource "aws_eks_node_group" "eks-node-group" {
+# resource "aws_eks_node_group" "eks-node-group" {
+#   cluster_name    = aws_eks_cluster.eks-cluster.name
+#   node_group_name = "${var.env}-${var.component}-nodegrp"
+#   node_role_arn   = aws_iam_role.eks-cluster-role.arn
+#   subnet_ids      = var.subnet_id
+#   instance_types  = ["t3.medium"]
+#   capacity_type   =  "SPOT"
+#   scaling_config {
+#     desired_size = 1
+#     max_size     = 2
+#     min_size     = 1
+#   }
+#   launch_template {
+#     version = "$Latest"
+#     name = aws_launch_template.launch_template.name
+#   }
+#   update_config {
+#     max_unavailable = 1
+#   }
+#   tags = {
+#     Name = "${var.env}-${var.component}-nodegrp"
+#   }
+# }
+resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
-  node_group_name = "${var.env}-${var.component}-nodegrp"
-  node_role_arn   = aws_iam_role.eks-cluster-role.arn
+  node_group_name = "${var.env}-eks-ng"
+  node_role_arn   = aws_iam_role.node-group-role.arn
   subnet_ids      = var.subnet_id
+  capacity_type   = "SPOT"
   instance_types  = ["t3.medium"]
-  capacity_type   =  "SPOT"
+
+    launch_template {
+      name    = "eks-${var.env}"
+      version = "$Latest"
+    }
+
   scaling_config {
     desired_size = 1
     max_size     = 2
     min_size     = 1
   }
-  launch_template {
-    version = "$Latest"
-    name = aws_launch_template.launch_template.name
-  }
+
   update_config {
     max_unavailable = 1
   }
   tags = {
-    Name = "${var.env}-${var.component}-nodegrp"
+    Name = "${var.env}-eks-ng"
   }
 }
 # to grant policy in an eks cluster
