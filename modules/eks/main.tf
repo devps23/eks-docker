@@ -13,6 +13,27 @@ resource "aws_eks_cluster" "eks-cluster" {
     resources = ["secrets"]
   }
 }
+# //create a security group
+resource "aws_security_group" "security" {
+  name        = "security-${var.component}-${var.env}"
+  description = "security-${var.component}-${var.env}"
+  vpc_id      = var.vpc_id
+  ingress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "sg-${var.component}-eks"
+  }
+}
 # create a cluster role and policy
 resource "aws_iam_role" "eks-cluster-role" {
   name               = "${var.env}-instance-role"
@@ -90,7 +111,10 @@ resource "aws_launch_template" "launch_template" {
     device_name = "/dev/sdf"
 #     ebs storage
     ebs {
-      volume_size = 20
+      volume_size           = 100
+      kms_key_id            = var.kms_key_id
+      encrypted             = true
+      delete_on_termination = true
     }
   }
 #   tag specification for instance name

@@ -32,4 +32,7 @@ module "eks"{
   env                       =  var.env
   subnet_id                 =  module.vpc.backend_subnets
   component                 = "eks-cluster"
+  kms_key_id                = "arn:aws:kms:us-east-1:041445559784:key/14862fc0-602f-4084-ae15-5c909d97048d"
+  vpc_id                    = module.vpc.vpc_id
+  bastion_nodes             = var.bastion_nodes
 }
