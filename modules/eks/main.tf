@@ -1,6 +1,6 @@
 // create an eks cluster
 resource "aws_eks_cluster" "eks-cluster" {
-  name        = "${env}-${component}"
+  name        = "${var.env}-${var.component}"
   role_arn    = aws_iam_role.eks-cluster-role.arn
   vpc_config {
     subnet_ids = var.subnet_id
