@@ -1,7 +1,7 @@
 // create an eks cluster
 resource "aws_eks_cluster" "eks-cluster" {
   name     = "${var.env}-${var.component}"
-  role_arn = aws_iam_role.eks-cluster-role.arn
+  role_arn = aws_iam_role.cluster-role.arn
   vpc_config {
     subnet_ids = var.subnet_id
   }
@@ -35,13 +35,13 @@ resource "aws_security_group" "security" {
   }
 }
 # create a cluster role and policy
-resource "aws_iam_role" "eks-cluster-role" {
-  name               = "${var.env}-instance-role"
-  assume_role_policy = aws_iam_role.eks-cluster-role.arn
-  tags = {
-    Name = "${var.env}-cluster-role"
-  }
-}
+# resource "aws_iam_role" "eks-cluster-role" {
+#   name               = "${var.env}-instance-role"
+#   assume_role_policy = aws_iam_role.eks-cluster-role.arn
+#   tags = {
+#     Name = "${var.env}-cluster-role"
+#   }
+# }
 
 # create a node group and node group policy
 # attach launch template in node group
