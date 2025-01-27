@@ -75,7 +75,7 @@ resource "aws_eks_node_group" "eks-node-group" {
 # to grant policy in an eks cluster
 resource "aws_iam_role" "node-group-role" {
   name = "${var.env}-${var.component}-node-grp-role"
-  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.id
+  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
 }
 # the below policy for to interact with eks cluster
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
