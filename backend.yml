@@ -25,7 +25,7 @@ spec:
         - name: vault-secret
           mountPath: /data
     - name: schema
-      image: pavanidevops78/kubernetes:2.9
+      image: pavanidevops78/kubernetes:3.1
       volumeMounts:
         - name: vault-secret
           mountPath: /data
