@@ -37,7 +37,7 @@ resource "aws_security_group" "security" {
 # create a cluster role and policy
 resource "aws_iam_role" "eks-cluster-role" {
   name               = "${var.env}-instance-role"
-  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.id
   tags = {
     Name = "${var.env}-cluster-role"
   }
@@ -98,10 +98,24 @@ resource "aws_eks_node_group" "main" {
     Name = "${var.env}-eks-ng"
   }
 }
+resource "aws_iam_role" "iam_node_role" {
+  name = "eks-node-group-example"
+
+  assume_role_policy = jsonencode({
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+    }]
+    Version = "2012-10-17"
+  })
+}
 # to grant policy in an eks cluster
 resource "aws_iam_role" "node-group-role" {
   name = "${var.env}-${var.component}-node-grp-role"
-  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.id
 }
 # the below policy for to interact with eks cluster
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
@@ -119,7 +133,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 # create a nodes in node group and iam role
 resource "aws_iam_role" "node" {
   name              = "${var.env}-${var.component}-node"
- assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
+ assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.id
 }
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodeMinimalPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodeMinimalPolicy"
