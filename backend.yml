@@ -25,7 +25,8 @@ spec:
         - name: vault-secret
           mountPath: /data
     - name: schema
-      image: public.ecr.aws/u4j6q5s8/backend-schema:1.0
+      image: 041445559784.dkr.ecr.us-east-1.amazonaws.com/backend-schema:1.0
+
       volumeMounts:
         - name: vault-secret
           mountPath: /data
@@ -33,7 +34,7 @@ spec:
 
   containers:
     - name: backend
-      image: public.ecr.aws/u4j6q5s8/expense-backend:1.2
+      image: 041445559784.dkr.ecr.us-east-1.amazonaws.com/expense-backend:1.0
       volumeMounts:
         - name: vault-secret
           mountPath: /data
