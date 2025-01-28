@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: frontend
-      image: pavanidevops78/kubernetes:2.3
+      image: public.ecr.aws/u4j6q5s8/expense-frontend:1.0
 
 ---
 apiVersion: v1
