@@ -8,7 +8,6 @@ spec:
     app: nginx
   template:
     metadata:
-      name: nginx
       labels:
         app: nginx
     spec:
