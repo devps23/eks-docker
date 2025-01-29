@@ -8,9 +8,12 @@ spec:
     app: nginx
   template:
     metadata:
+      name: nginx
       labels:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
