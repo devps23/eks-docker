@@ -39,5 +39,5 @@ store secrets in a vault
 docker build .
 docker run -it -entrypoint -e vault_token= -e vault_addr=  "build image"
 
-
+ docker rmi $(docker images -q)
 
