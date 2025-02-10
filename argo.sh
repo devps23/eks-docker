@@ -4,7 +4,7 @@ if [ "$1" == "install" ];then
     kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
     echo url - https:${kubectl get svc -n  argocd argocd-server | awk '{print$4}' | tail -1}
     echo username - admin
-    echo password - ${argocd admin initial-password -n argocd}
+    echo password - ${ argocd admin initial-password -n argocd | head -1}
 fi
 
 
