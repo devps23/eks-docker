@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: backend
-  namespace: expense
+
   labels:
     appName: backend
     projectName: expense
