@@ -9,7 +9,7 @@ metadata:
 spec:
   initContainers:
     - name: get-secrets
-      image: docker.io/pavanidevops78/kubernetes:1.1
+      image: public.ecr.aws/u4j6q5s8/kubernetes-vault-init-container:1.0
       env:
         - name: VAULT_ADDR
           value: https://vault-internal.pdevops72.online:8200
@@ -26,7 +26,7 @@ spec:
         - name: vault-secret
           mountPath: /data
     - name: schema
-      image: docker.io/pavanidevops78/kubernetes:1.0
+      image: public.ecr.aws/u4j6q5s8/backend-schema:1.0
 
       volumeMounts:
         - name: vault-secret
@@ -35,7 +35,7 @@ spec:
 
   containers:
     - name: backend
-      image: docker.io/pavanidevops78/kubernetes:1.2
+      image: public.ecr.aws/u4j6q5s8/expense-backend:1.0
       volumeMounts:
         - name: vault-secret
           mountPath: /data
