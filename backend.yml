@@ -42,10 +42,6 @@ spec:
   volumes:
     - name: vault-secret
       emptyDir: {}
-      tmpfs:
-        medium: Memory
-        mountOptions:
-          - noswap
 
 ---
 apiVersion: v1
