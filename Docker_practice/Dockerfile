@@ -1,7 +1,6 @@
-FROM   docker.io/nginx:1.24
+FROM   docker.io/nginx
 RUN   rm -rf /usr/share/nginx/html/*
-COPY  run.sh /
-ENTRYPOINT ["bash","/run.sh"]
+
 
 
 
