@@ -11,22 +11,22 @@ module "vpc"{
   availability_zone        = var.availability_zone
   public_subnets           = var.public_subnets
 }
-# module "rds"{
-#   source                  = "./modules/rds"
-#   component               = "mysql"
-#   env                     = var.env
-#   vpc_id                  = module.vpc.vpc_id
-#   rds_app_port            = 3306
-#   server_app_port_cidr    = var.backend_subnets
-#   subnet_id               = module.vpc.mysql_subnets
-#   allocated_storage       = 20
-#   db_name                 = "mydb"
-#   engine                  = "mysql"
-#   engine_version          = "8.0.36"
-#   instance_class          = "db.t3.micro"
-#   storage_type            = "gp3"
-#   kms_key_id              = var.kms_key_id
-# }
+module "rds"{
+  source                  = "./modules/rds"
+  component               = "mysql"
+  env                     = var.env
+  vpc_id                  = module.vpc.vpc_id
+  rds_app_port            = 3306
+  server_app_port_cidr    = var.backend_subnets
+  subnet_id               = module.vpc.mysql_subnets
+  allocated_storage       = 20
+  db_name                 = "mydb"
+  engine                  = "mysql"
+  engine_version          = "8.0.36"
+  instance_class          = "db.t3.micro"
+  storage_type            = "gp3"
+  kms_key_id              = var.kms_key_id
+}
 module "eks"{
   source                    =  "./modules/eks"
   env                       =  var.env
