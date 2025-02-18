@@ -1,5 +1,4 @@
 FROM   docker.io/nginx:1.24
-RUN   dnf install nginx -y
 RUN   rm -rf /usr/share/nginx/html/*
 RUN   mkdir /usr/share/nginx/html
 COPY  run.sh /
