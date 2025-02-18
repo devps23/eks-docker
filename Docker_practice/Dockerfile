@@ -7,7 +7,8 @@ RUN           mkdir -p /usr/share/nginx/html
 WORKDIR       /usr/share/nginx/html
 RUN           unzip /tmp/frontend.zip -d /usr/share/nginx/html
 COPY          expense.conf  /etc/nginx/default.d/expense.conf
-
+EXPOSE         80
+CMD            ["nginx", "-g", "daemon off;"]
 
 
 
