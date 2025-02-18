@@ -6,6 +6,7 @@ RUN           curl -L -o /tmp/frontend.zip https://expense-artifacts.s3.amazonaw
 RUN           mkdir -p /usr/share/nginx/html
 WORKDIR       /usr/share/nginx/html
 RUN           unzip /tmp/frontend.zip -d /usr/share/nginx/html
+COPY          expense.conf  /etc/nginx/default.d/expense.conf
 
 
 
