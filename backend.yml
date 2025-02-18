@@ -34,7 +34,7 @@ spec:
 
   containers:
     - name: backend
-      image: public.ecr.aws/u4j6q5s8/expense-backend:1.0
+      image: public.ecr.aws/u4j6q5s8/expense-backend:1.4
       volumeMounts:
         - name: vault-secret
           mountPath: /data
