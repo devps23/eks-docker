@@ -8,17 +8,17 @@ metadata:
 spec:
   initContainers:
     - name: get-secrets
-      image:  public.ecr.aws/u4j6q5s8/kubernetes-vault-init-container:1.2
+      image: public.ecr.aws/u4j6q5s8/kubernetes-vault-init-container:1.2
       env:
         - name: VAULT_ADDR
-          value: https://vault-internal.pdevops72.online:8200
+          value: "https://vault-internal.pdevops72.online:8200"
         - name: VAULT_TOKEN
           valueFrom:
             secretKeyRef:
               name: vault-token
               key: token
         - name: SECRET_NAME
-          value: common/vault
+          value: "common/vault"
         - name: VAULT_SKIP_VERIFY
           value: "TRUE"
       volumeMounts:
@@ -26,11 +26,9 @@ spec:
           mountPath: /data
     - name: schema
       image: public.ecr.aws/u4j6q5s8/backend-schema:1.4
-
       volumeMounts:
         - name: vault-secret
           mountPath: /data
-
 
   containers:
     - name: backend
