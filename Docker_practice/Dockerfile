@@ -1,7 +1,7 @@
 FROM   docker.io/nginx:1.24
 RUN    apt-get update && apt-get install -y dnf
 RUN   dnf install nginx -y
-RUN   rm -rf /usr/share/nginx/html
+RUN   rm -rf /usr/share/nginx/html/*
 RUN   mkdir /usr/share/nginx/html
 COPY  run.sh /
 ENTRYPOINT ["bash","/run.sh"]
