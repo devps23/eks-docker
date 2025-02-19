@@ -10,9 +10,6 @@ COPY          expense.conf  /etc/nginx/default.d/expense.conf
 EXPOSE         80
 CMD            ["nginx", "-g", "daemon off;"]
 
-
-
-
 # docker build -t nginx
 # docker create "image-id"
 # docker start "container id"
