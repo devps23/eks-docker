@@ -1,0 +1,1 @@
+mysql_secure_installation --set-${MYSQL_USER}-pass ${MYSQL_ROOT_PASSWORD}
