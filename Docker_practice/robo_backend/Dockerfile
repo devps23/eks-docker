@@ -1,6 +1,6 @@
 FROM              node As build-steps
 RUN              mkdir /app
 WORKDIR          /app
-COPY             backend/package.json  /app
-RUN             npm install
+COPY             backend/ /app/
+RUN              npm install
 
