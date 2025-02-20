@@ -7,6 +7,6 @@ RUN              npm install
 
 FROM             node:20-slim
 WORKDIR          /app
-COPY             --from=builder /app/node_modules/ node_modules
+COPY             --from=build-steps /app/node_modules/ node_modules
 EXPOSE           8080
 
