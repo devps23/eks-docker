@@ -19,7 +19,7 @@ COPY         frontend/ ./
 
 
 FROM          redhat/ubi9
-RUN           mkdir /usr/share/nginx/html
+RUN           yum install -y nginx && mkdir -p /usr/share/nginx/html && yum clean all
 WORKDIR       /usr/share/nginx/html
 COPY          --from=build-stage /usr/share/nginx/html/*  /usr/share/nginx/html/
 EXPOSE        80
