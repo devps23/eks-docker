@@ -2,7 +2,7 @@
 FROM              maven AS build-steps
 WORKDIR           /app
 COPY              shipping/  /app/
-RUN               mvn clean package
+RUN               mvn package
 RUN               mv target/shipping-1.0.jar shipping.jar
 
 # In stage 1 replace the name shipping-1.0.jar as shipping.jar
