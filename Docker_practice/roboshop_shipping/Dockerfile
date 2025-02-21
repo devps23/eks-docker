@@ -1,5 +1,5 @@
 # Stage 1
-FROM              maven:3.8.4-jdk-17 AS build-steps
+FROM              maven AS build-steps
 WORKDIR           /app
 COPY              ./  /app/
 RUN               mvn clean package
