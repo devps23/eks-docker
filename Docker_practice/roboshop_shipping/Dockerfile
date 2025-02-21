@@ -2,6 +2,7 @@
 FROM              maven AS build-steps
 WORKDIR           /app
 COPY              ./  /app/
+COPY              shipping/src/main /app/
 RUN               mvn package
 RUN               mv target/shipping-1.0.jar shipping.jar
 
