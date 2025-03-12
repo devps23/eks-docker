@@ -65,3 +65,40 @@ resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 #  EKS cluster should provide permission to External DNS tool to add DNS records in route 53
+resource "aws_iam_policy" "node-external-dns" {
+  name        = "${var.env}-node-external-dns"
+  path        = "/"
+  description = "${var.env}-node-external-dns"
+  policy =  <<EOF
+  {
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+  "Effect": "Allow",
+  "Action": [
+  "route53:ChangeResourceRecordSets"
+  ],
+  "Resource": [
+  "arn:aws:route53:::hostedzone/*"
+  ]
+  },
+  {
+  "Effect": "Allow",
+  "Action": [
+  "route53:ListHostedZones",
+  "route53:ListResourceRecordSets",
+  "route53:ListTagsForResource"
+  ],
+  "Resource": [
+  "*"
+  ]
+  }
+  ]
+}
+EOF
+}
+# attach policy
+resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore" {
+  role       = aws_iam_role.node-role.name
+  policy_arn = aws_iam_policy.node-external-dns.arn
+}

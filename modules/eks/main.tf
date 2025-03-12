@@ -60,16 +60,16 @@ resource "aws_eks_node_group" "main" {
     max_unavailable = 1
   }
 }
-
-# resource "null_resource" "aws-auth" {
-#
-#   depends_on = [aws_eks_node_group.main]
-#
-#   provisioner "local-exec" {
-#     command = <<EOF
-# aws eks update-kubeconfig --name "${var.env}-eks"
-# aws-auth upsert --maproles --rolearn arn:aws:iam::633788536644:role/ci-server-role --username system:node:{{EC2PrivateDNSName}} --groups system:masters
-# EOF
-#   }
-# }
+# aws-auth is for authentication to provide from eks cluster to nodes(in jenkins)
+# eks cluster will create in workstation, in continuous delivery(jenkins) expense-backend code will execute in node agent
+# so to provide authentication from eks to node agent to generate pods
+resource "null_resource" "aws-auth" {
+  depends_on = [aws_eks_node_group.main]
+  provisioner "local-exec" {
+    command = <<EOF
+aws eks update-kubeconfig --name "${var.env}-eks"
+aws-auth upsert --maproles --rolearn arn:aws:iam::633788536644:role/ci-server-role --username system:node:{{EC2PrivateDNSName}} --groups system:masters
+EOF
+  }
+}
 
