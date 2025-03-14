@@ -24,7 +24,7 @@ resource "aws_iam_role_policy" "external_dns_policy" {
   name = "external-dns"
   role = aws_iam_role.external-dns.id
 
-  policy = file("${path.module}/external-dns.json")
+  policy = file("${path.module}/policy-external-dns.json")
 }
 
 resource "aws_eks_pod_identity_association" "external--pod-assocation" {
