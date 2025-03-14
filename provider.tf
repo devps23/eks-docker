@@ -3,3 +3,8 @@ provider "vault" {
   token = "hvs.T8WnPWmYmGZkPYlGAHXVmebk"
   skip_tls_verify = true
 }
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
