@@ -79,7 +79,7 @@ resource "aws_iam_policy" "node-external-dns" {
   "route53:ChangeResourceRecordSets"
   ],
   "Resource": [
-  "arn:aws:route53:::hostedzone/*"
+  "arn:aws:route53:::hostedzone/Z08520602FC482APPVUI7"
   ]
   },
   {
