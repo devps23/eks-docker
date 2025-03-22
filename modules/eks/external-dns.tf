@@ -32,6 +32,7 @@ resource "aws_eks_pod_identity_association" "external--pod-assocation" {
   namespace       = "default"
   service_account = "dns-sa"
   role_arn        = aws_iam_role.external-dns.arn
+
 }
 
 resource "helm_release" "external-dns" {
@@ -45,6 +46,8 @@ resource "helm_release" "external-dns" {
   set {
     name  = "serviceAccount.name"
     value = "dns-sa"
+
   }
 }
+
 
