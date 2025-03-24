@@ -13,3 +13,4 @@ variable "availability_zone" {}
 variable "public_subnets"{}
 variable "bastion_nodes" {}
 variable "kms_key_id" {}
+variable "docdb" {}
