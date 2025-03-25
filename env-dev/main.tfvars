@@ -23,3 +23,12 @@ docdb = {
 
   }
 }
+elasticache = {
+  main = {
+    component      = "redis"
+    env            = "dev"
+    family         = "redis6.x"
+    node_type      = "cache.t4g.micro"
+    engine_version = "6.2"
+  }
+}
