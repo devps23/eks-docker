@@ -49,7 +49,7 @@ resource "helm_release" "external-dns" {
 
 resource "helm_release" "prometheus" {
   name       = "prometheus"
-  namespace  = "monitoring"
+  namespace  = "argocd"
   chart = "kube-prometheus-stack"
   repository = "https://prometheus-community.github.io/helm-charts"
   set {
