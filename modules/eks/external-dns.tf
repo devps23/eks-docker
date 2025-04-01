@@ -52,6 +52,7 @@ resource "helm_release" "prometheus" {
   namespace  = "argocd"
   chart = "kube-prometheus-stack"
   repository = "https://prometheus-community.github.io/helm-charts"
+
   set {
     name  = "service.type"
     value = "LoadBalancer"
@@ -60,6 +61,10 @@ resource "helm_release" "prometheus" {
   set {
     name  = "ingress.enabled"
     value = "true"  # Enable Ingress for Prometheus
+  }
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "prometheus-dev.pdevops78.online"  # Replace with your desired hostname
   }
 }
 
