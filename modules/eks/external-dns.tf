@@ -52,7 +52,7 @@ resource "helm_release" "prometheus" {
   namespace  = "argocd"
   chart = "kube-prometheus-stack"
   repository = "https://prometheus-community.github.io/helm-charts"
-
+  version    = "35.0.0"
   set {
     name  = "service.type"
     value = "LoadBalancer"
