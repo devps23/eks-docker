@@ -47,38 +47,64 @@ resource "helm_release" "external-dns" {
   }
 }
 
+# resource "helm_release" "prometheus" {
+#   depends_on = [null_resource.aws-auth,aws_iam_role_policy.external_dns_policy]
+#   name       = "prometheus"
+#   namespace  = "default"
+#   chart      = "prometheus"
+#   repository = "https://prometheus-community.github.io/helm-charts"
+#   set {
+#     name  = "service.type"
+#     value = "NodePort"
+#
+#   }
+# }
+#
+# resource "helm_release" "grafana" {
+#   chart      = "grafana"
+#   name       = "grafana"
+#   repository = "https://grafana.github.io/helm-charts"
+#   namespace  = "default"
+#   set {
+#     name  = "service.type"
+#     value = "NodePort"
+#   }
+# }
+# resource "helm_release" "alertmanager" {
+#   name       = "alertmanager"
+#   chart      = "kube-prometheus-stack"
+#   repository = "https://prometheus-community.github.io/helm-charts"
+#   namespace  = "monitoring"
+#   set {
+#     name  = "service.type"
+#     value = "NodePort"
+#   }
+# }
+resource "helm_repository" "prometheus" {
+  name = "prometheus-community"
+  url  = "https://prometheus-community.github.io/helm-charts"
+}
 resource "helm_release" "prometheus" {
-  depends_on = [null_resource.aws-auth,aws_iam_role_policy.external_dns_policy]
   name       = "prometheus"
-  namespace  = "default"
-  chart      = "prometheus"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  set {
-    name  = "service.type"
-    value = "NodePort"
+  repository = helm_repository.prometheus.url
+  chart      = "kube-prometheus-stack"  # You can choose other charts too
+  version    = "35.0.0"  # Version of the chart (check the latest version)
 
+  set {
+    name  = "prometheus.prometheusSpec.retention"
+    value = "15d"  # Retention policy
+  }
+
+  set {
+    name  = "alertmanager.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "grafana.enabled"
+    value = "true"
   }
 }
 
-resource "helm_release" "grafana" {
-  chart      = "grafana"
-  name       = "grafana"
-  repository = "https://grafana.github.io/helm-charts"
-  namespace  = "default"
-  set {
-    name  = "service.type"
-    value = "NodePort"
-  }
-}
-resource "helm_release" "alertmanager" {
-  name       = "alertmanager"
-  chart      = "kube-prometheus-stack"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  namespace  = "monitoring"
-  set {
-    name  = "service.type"
-    value = "NodePort"
-  }
-}
 
 
