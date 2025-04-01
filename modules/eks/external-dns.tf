@@ -57,6 +57,10 @@ resource "helm_release" "prometheus" {
     value = "LoadBalancer"
 
   }
+  set {
+    name  = "ingress.enabled"
+    value = "true"  # Enable Ingress for Prometheus
+  }
 }
 
 # resource "helm_release" "grafana" {
