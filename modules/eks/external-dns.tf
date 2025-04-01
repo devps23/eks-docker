@@ -104,6 +104,9 @@ resource "helm_release" "prometheus" {
     name  = "grafana.enabled"
     value = "true"
   }
+
+  namespace = "argocd"  # Define the namespace where Prometheus will be deployed
+  create_namespace = true   # Terraform will create the namespace if it doesn't exist
 }
 
 
