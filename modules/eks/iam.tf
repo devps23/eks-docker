@@ -109,4 +109,45 @@ resource "aws_iam_role_policy_attachment" "node-externalDNS" {
   role       = aws_iam_role.node-role.name
   policy_arn = aws_iam_policy.node-external-dns.arn
 }
+resource "aws_iam_policy" "node-clusterAutoScaler" {
+  name        = "${var.env}-node-clusterAutoScaler"
+  path        = "/"
+  description = "${var.env}-node-clusterAutoScaler"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "autoscaling:DescribeAutoScalingGroups",
+        "autoscaling:DescribeAutoScalingInstances",
+        "autoscaling:DescribeLaunchConfigurations",
+        "autoscaling:DescribeScalingActivities",
+        "autoscaling:DescribeTags",
+        "ec2:DescribeImages",
+        "ec2:DescribeInstanceTypes",
+        "ec2:DescribeLaunchTemplateVersions",
+        "ec2:GetInstanceTypesFromInstanceRequirements",
+        "eks:DescribeNodegroup"
+      ],
+      "Resource": ["*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "autoscaling:SetDesiredCapacity",
+        "autoscaling:TerminateInstanceInAutoScalingGroup"
+      ],
+      "Resource": ["*"]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "node-clusterAutoScaler" {
+  policy_arn = aws_iam_policy.node-clusterAutoScaler.arn
+  role       = aws_iam_role.node-role.name
+}
 
