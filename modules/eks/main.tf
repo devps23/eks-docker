@@ -81,6 +81,7 @@ resource "aws_eks_addon" "eks-pod-identity-agent" {
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
 }
+# add-on for PVC ebs volume
 resource "aws_eks_addon" "aws_ebs_csi_driver" {
   cluster_name  = aws_eks_cluster.cluster.name
   addon_name    = "aws-ebs-csi-driver"
