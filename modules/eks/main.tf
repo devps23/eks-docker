@@ -75,10 +75,13 @@ EOF
 
 resource "aws_eks_addon" "eks-pod-identity-agent" {
   depends_on = [aws_eks_node_group.main]
-
   cluster_name                = aws_eks_cluster.cluster.name
-  addon_name                  = "eks-pod-identity-agent"
+  addon_name                  = ["eks-pod-identity-agent"]
   addon_version               = "v1.3.2-eksbuild.2"
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
+}
+resource "aws_eks_addon" "aws_ebs_csi_driver" {
+  cluster_name  = aws_eks_cluster.cluster.name
+  addon_name    = "aws-ebs-csi-driver"
 }

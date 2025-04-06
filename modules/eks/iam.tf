@@ -29,7 +29,10 @@ resource "aws_iam_role_policy_attachment" "eks-AmazonEKSVPCResourceController" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.cluster-role.name
 }
-
+resource "aws_iam_role_policy_attachment" "node-AmazonEBSCSIDriverPolicyr" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicyr"
+  role       = aws_iam_role.cluster-role.name
+}
 
 resource "aws_iam_role" "node-role" {
   name = "${var.env}-eks-node-role"
