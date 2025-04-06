@@ -29,11 +29,7 @@ resource "aws_iam_role_policy_attachment" "eks-AmazonEKSVPCResourceController" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.cluster-role.name
 }
-# PersistenceVolumeClaims PVC policy
-resource "aws_iam_role_policy_attachment" "node-AmazonEBSCSIDriverPolicyr" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicyr"
-  role       = aws_iam_role.cluster-role.name
-}
+
 
 resource "aws_iam_role" "node-role" {
   name = "${var.env}-eks-node-role"
@@ -67,6 +63,11 @@ resource "aws_iam_role_policy_attachment" "node-AmazonEC2ContainerRegistryReadOn
 resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore" {
   role = aws_iam_role.node-role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+# PersistenceVolumeClaims PVC policy
+resource "aws_iam_role_policy_attachment" "node-AmazonEBSCSIDriverPolicyr" {
+  role       = aws_iam_role.node-role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicyr"
 }
 #  EKS cluster should provide permission to External DNS tool to add DNS records in route 53
 resource "aws_iam_policy" "node-external-dns" {
