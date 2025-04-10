@@ -36,20 +36,20 @@ module "eks"{
   vpc_id                    = module.vpc.vpc_id
   bastion_nodes             = var.bastion_nodes
 }
-module "docdb"{
-  for_each             = var.docdb
-  source               = "./modules/docdb"
-  component            = each.value["component"]
-  env                  = var.env
-  subnets              = module.vpc.mysql_subnets
-  instance_count       = 1
-  instance_class       = each.value["instance_class"]
-  server_app_port_cidr = var.backend_subnets
-  kms_key_id           = each.value["kms_key_id"]
-  engine_version       = each.value["engine_version"]
-  family               = each.value["family"]
-  vpc_id               = module.vpc.vpc_id
-}
+# module "docdb"{
+#   for_each             = var.docdb
+#   source               = "./modules/docdb"
+#   component            = each.value["component"]
+#   env                  = var.env
+#   subnets              = module.vpc.mysql_subnets
+#   instance_count       = 1
+#   instance_class       = each.value["instance_class"]
+#   server_app_port_cidr = var.backend_subnets
+#   kms_key_id           = each.value["kms_key_id"]
+#   engine_version       = each.value["engine_version"]
+#   family               = each.value["family"]
+#   vpc_id               = module.vpc.vpc_id
+# }
 # module "reddis"{
 #   for_each             = var.elasticache
 #   source               = "./modules/elasticache"
