@@ -50,15 +50,15 @@ module "docdb"{
   family               = each.value["family"]
   vpc_id               = module.vpc.vpc_id
 }
-# module "reddis"{
-#   for_each             = var.elasticache
-#   source               = "./modules/elasticache"
-#   server_app_port_cidr = var.backend_subnets
-#   subnets              = module.vpc.mysql_subnets
-#   vpc_id              = module.vpc.vpc_id
-#   component            = each.value["component"]
-#   env                  = each.value["env"]
-#   family               = each.value["family"]
-#   node_type            = each.value["node_type"]
-#   engine_version       = each.value["engine_version"]
-# }
+module "reddis"{
+  for_each             = var.elasticache
+  source               = "./modules/elasticache"
+  server_app_port_cidr = var.backend_subnets
+  subnets              = module.vpc.mysql_subnets
+  vpc_id              = module.vpc.vpc_id
+  component            = each.value["component"]
+  env                  = each.value["env"]
+  family               = each.value["family"]
+  node_type            = each.value["node_type"]
+  engine_version       = each.value["engine_version"]
+}
