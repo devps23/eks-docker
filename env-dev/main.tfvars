@@ -32,3 +32,11 @@ elasticache = {
     engine_version = "6.2"
   }
 }
+rabbitmq = {
+  main = {
+    kms_key_id     = "arn:aws:kms:us-east-1:041445559784:key/14862fc0-602f-4084-ae15-5c909d97048d"
+    instance_type   = "t3.micro"
+    component       = "rabbitmq"
+
+  }
+}
