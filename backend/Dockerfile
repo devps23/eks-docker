@@ -1,5 +1,5 @@
 FROM                  docker.io/redhat/ubi9
-RUN                   dnf install -y mysql
+RUN                   dnf install -y mysql git
 RUN                   mkdir /app
 WORKDIR               /app
 COPY                  ./ /app/
