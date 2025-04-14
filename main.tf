@@ -62,16 +62,16 @@ module "reddis"{
   node_type            = each.value["node_type"]
   engine_version       = each.value["engine_version"]
 }
-module "rabbitmq" {
-  for_each                 = var.rabbitmq
-  source                   = "./modules/rabbitmq"
-  instance_type            = each.value["instance_type"]
-  subnets                  = module.vpc.mysql_subnets
-  vpc_id                   = module.vpc.vpc_id
-  component                = each.value["component"]
-  server_app_port_cidr     = var.backend_subnets
-  kms_key_id               = each.value["kms_key_id"]
-  env                      = var.env
-  bastion_nodes            = var.bastion_nodes
-  zone_id                  = var.zone_id
-}
+# module "rabbitmq" {
+#   for_each                 = var.rabbitmq
+#   source                   = "./modules/rabbitmq"
+#   instance_type            = each.value["instance_type"]
+#   subnets                  = module.vpc.mysql_subnets
+#   vpc_id                   = module.vpc.vpc_id
+#   component                = each.value["component"]
+#   server_app_port_cidr     = var.backend_subnets
+#   kms_key_id               = each.value["kms_key_id"]
+#   env                      = var.env
+#   bastion_nodes            = var.bastion_nodes
+#   zone_id                  = var.zone_id
+# }
