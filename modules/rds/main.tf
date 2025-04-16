@@ -1,5 +1,5 @@
 resource "aws_db_instance" "db_instance" {
-  allocated_storage    = 20
+  allocated_storage    = var.allocated_storage
   db_name              = var.db_name
   engine               = var.engine
   engine_version       = var.engine_version
@@ -7,7 +7,7 @@ resource "aws_db_instance" "db_instance" {
   username             = jsondecode(data.vault_generic_secret.my_secret.data_json).rds_username
   password             = jsondecode(data.vault_generic_secret.my_secret.data_json).rds_password
   parameter_group_name = aws_db_parameter_group.pg.id
-  skip_final_snapshot  = true
+  skip_final_snapshot  = var.skip_final_snapshot
   storage_type         = var.storage_type
   publicly_accessible  = false
   vpc_security_group_ids = [aws_security_group.rds.id]
@@ -22,7 +22,7 @@ resource "aws_db_instance" "db_instance" {
 }
 resource "aws_db_parameter_group" "pg" {
   name   = "${var.env}-${var.component}-rds"
-  family = "mysql8.0"
+  family = var.family
   }
 resource "aws_db_subnet_group" "subnet_group" {
   name       = "${var.env}-${var.component}-sbgrp"

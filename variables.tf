@@ -16,3 +16,4 @@ variable "kms_key_id" {}
 variable "docdb" {}
 variable "elasticache" {}
 variable "rabbitmq" {}
+variable "rds"{}

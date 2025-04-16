@@ -12,6 +12,7 @@ module "vpc"{
   public_subnets           = var.public_subnets
 }
 module "rds"{
+    for_each              = var.rds
   source                  = "./modules/rds"
   component               = "mysql"
   env                     = var.env
@@ -19,13 +20,15 @@ module "rds"{
   rds_app_port            = 3306
   server_app_port_cidr    = var.backend_subnets
   subnet_id               = module.vpc.mysql_subnets
-  allocated_storage       = 20
+  allocated_storage       = each.value["allocated_storage"]
+  family                  = each.value["family"]
   db_name                 = "mydb"
   engine                  = "mysql"
-  engine_version          = "8.0.36"
-  instance_class          = "db.t3.micro"
-  storage_type            = "gp3"
+  engine_version          = each.value["engine_version"]
+  instance_class          = each.value["instance_class"]
+  storage_type            = each.value["storage_type"]
   kms_key_id              = var.kms_key_id
+  skip_final_snapshot     = each.value["skip_final_snapshot"]
 }
 module "eks"{
   source                    =  "./modules/eks"
