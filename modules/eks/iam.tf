@@ -65,9 +65,10 @@ resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 # PersistenceVolumeClaims PVC policy required for node to increase ebs volume automatically for pod
+# use AmazonEBSCSIDriverPolicy
 resource "aws_iam_role_policy_attachment" "node-AmazonEBSCSIDriverPolicy" {
-  role       = aws_iam_role.node-role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+  role       = aws_iam_role.node-role.name
 }
 
 #  EKS cluster should provide permission to External DNS tool to add DNS records in route 53
