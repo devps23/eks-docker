@@ -13,19 +13,22 @@ data "aws_iam_policy_document" "external_role" {
     ]
   }
 }
-
+#  create an iam role with trust policy
 resource "aws_iam_role" "external-dns" {
   name               = "eks-pod-identity-external-dns"
   assume_role_policy = data.aws_iam_policy_document.external_role.json
 }
 
+# create an inline policy and attach role, resource + action
 resource "aws_iam_role_policy" "external_dns_policy" {
   name = "external-dns"
   role = aws_iam_role.external-dns.id
   policy = file("${path.module}/policy-external-dns.json")
 }
 
-resource "aws_eks_pod_identity_association" "external--pod-assocation" {
+
+#  create pod identity and  attach to cluster
+resource "aws_eks_pod_identity_association" "external--pod-association" {
   cluster_name    = aws_eks_cluster.cluster.name
   namespace       = "default"
   service_account = "dns-sa"
@@ -46,4 +49,5 @@ resource "helm_release" "external-dns" {
 
   }
 }
+
 
