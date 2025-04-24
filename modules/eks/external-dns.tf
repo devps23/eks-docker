@@ -30,7 +30,7 @@ resource "aws_iam_role_policy" "external_dns_policy" {
 #   attach policy-external-dns.json to external-dns
 }
 
-resource "aws_iam_role_policy" "aws-ebs-csi-driver" {
+resource "aws_iam_role_policy" "ebs-csi-driver" {
   name = "ebs-csi"
   role = aws_iam_role.external-dns.id
   policy = file("${path.module}/policy-ebs-csi-driver.json")
