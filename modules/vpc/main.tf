@@ -45,7 +45,7 @@ resource "aws_subnet" "backend_subnets" {
 #     Name = "${var.env}-mysql-subnets-${count.index}"
 #   }
 # }
-create public subnets
+# create public subnets
 resource "aws_subnet" "public_subnets" {
   count                = length(var.public_subnets)
   vpc_id               = aws_vpc.vpc.id
