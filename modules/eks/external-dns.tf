@@ -46,7 +46,7 @@ resource "aws_eks_pod_identity_association" "external--pod-association" {
 resource "aws_eks_pod_identity_association" "ebs-csi-driver" {
   cluster_name    = aws_eks_cluster.cluster.name
   namespace       = "default"
-  service_account = "ebs-csi-controller-sa"
+  service_account = "ebs-csi"
   role_arn        = aws_iam_role.external-dns.arn
 }
 
@@ -66,7 +66,7 @@ resource "helm_release" "external-dns" {
   }
 }
 #  create a  serviceaccount with name ebs-csi
-resource "hel_release" "ebs-csi"{
+resource "helm_release" "ebs-csi"{
    depends_on = [null_resource.aws-auth,aws_iam_role_policy.ebs-csi-driver]
    name = "ebs-csi"
    repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/"
