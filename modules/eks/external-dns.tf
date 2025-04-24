@@ -20,11 +20,11 @@ resource "aws_iam_role" "external-dns" {
   assume_role_policy = data.aws_iam_policy_document.external_role.json
 #   the above assume_role_policy is a trust relationships
 }
-resource "aws_iam_role" "external-dns" {
-  name               = "eks-pod-identity-ebs-csi"
-  assume_role_policy = data.aws_iam_policy_document.external_role.json
-#   to create a role and attach trust relationship
-}
+# resource "aws_iam_role" "ebs-csi" {
+#   name               = "eks-pod-identity-ebs-csi"
+#   assume_role_policy = data.aws_iam_policy_document.external_role.json
+# #   to create a role and attach trust relationship
+# }
 
 # create an inline policy and attach role, resource + action
 #  here policy name is "external-dns"
@@ -48,12 +48,12 @@ resource "aws_eks_pod_identity_association" "external--pod-association" {
   role_arn        = aws_iam_role.external-dns.arn
 }
 
-resource "aws_eks_pod_identity_association" "ebs-csi-driver" {
-  cluster_name    = aws_eks_cluster.cluster.name
-  namespace       = "default"
-  service_account = "ebs-csi"
-  role_arn        = aws_iam_role.external-dns.arn
-}
+# resource "aws_eks_pod_identity_association" "ebs-csi-driver" {
+#   cluster_name    = aws_eks_cluster.cluster.name
+#   namespace       = "default"
+#   service_account = "ebs-csi"
+#   role_arn        = aws_iam_role.external-dns.arn
+# }
 
 #  create a pod and serviceaccount name
 resource "helm_release" "external-dns" {
@@ -71,19 +71,19 @@ resource "helm_release" "external-dns" {
   }
 }
 #  create a  serviceaccount with name ebs-csi
-resource "helm_release" "ebs-csi"{
-   depends_on = [null_resource.aws-auth,aws_iam_role_policy.ebs-csi-driver]
-   name = "ebs-csi"
-   repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/"
-   chart = "ebs-csi"
-   version = "v1.42.0"
-   namespace = "default"
-
-   set {
-    name = "serviceAccount.name"
-    value = "ebs-csi"
-   }
-}
+# resource "helm_release" "ebs-csi"{
+#    depends_on = [null_resource.aws-auth,aws_iam_role_policy.ebs-csi-driver]
+#    name = "ebs-csi"
+#    repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/"
+#    chart = "ebs-csi"
+#    version = "v1.42.0"
+#    namespace = "default"
+#
+#    set {
+#     name = "serviceAccount.name"
+#     value = "ebs-csi"
+#    }
+# }
 
 
 
