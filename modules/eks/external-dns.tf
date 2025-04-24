@@ -33,7 +33,7 @@ resource "aws_iam_role_policy" "external_dns_policy" {
 resource "aws_iam_role_policy" "aws-ebs-csi-driver" {
   name = "ebs-csi"
   role = aws_iam_role.external-dns.id
-  policy = file("${path.module}/policy-ebs-csi-driver")
+  policy = file("${path.module}/policy-ebs-csi-driver.json")
 }
 #  create pod identity and  attach to cluster
 resource "aws_eks_pod_identity_association" "external--pod-association" {
