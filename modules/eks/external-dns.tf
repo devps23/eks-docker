@@ -20,6 +20,11 @@ resource "aws_iam_role" "external-dns" {
   assume_role_policy = data.aws_iam_policy_document.external_role.json
 #   the above assume_role_policy is a trust relationships
 }
+resource "aws_iam_role" "external-dns" {
+  name               = "eks-pod-identity-ebs-csi"
+  assume_role_policy = data.aws_iam_policy_document.external_role.json
+#   to create a role and attach trust relationship
+}
 
 # create an inline policy and attach role, resource + action
 #  here policy name is "external-dns"
