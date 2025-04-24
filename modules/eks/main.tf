@@ -82,30 +82,16 @@ resource "aws_eks_addon" "eks-pod-identity-agent" {
   resolve_conflicts_on_create = "OVERWRITE"
 }
 # add-on for PVC ebs volume
-resource "aws_eks_addon" "aws_ebs_csi_driver" {
-    depends_on   = [aws_eks_node_group.main]
-   cluster_name  = aws_eks_cluster.cluster.name
-   addon_name    = "aws-ebs-csi-driver"
-   tag_specifications = {
-       name = "${var.env}-ebs-volume"
-       }
-}
-
-# resource "aws_ebs_volume" "my_ebs" {
-#     name = "${var.env}-ebs-volume"
-#     size             = 1
-#   tags = {
-#     Name = "${var.env}-ebs-volume"
-#   }
+# resource "aws_eks_addon" "aws_ebs_csi_driver" {
+#     depends_on   = [aws_eks_node_group.main]
+#    cluster_name  = aws_eks_cluster.cluster.name
+#    addon_name    = "aws-ebs-csi-driver"
+#    tag_specifications = {
+#        name = "${var.env}-ebs-volume"
+#        }
 # }
 
-resource "kubernetes_service_account" "ebs_csi_sa" {
-  metadata {
-    name      = "ebs-csi-controller-sa"
-    namespace = "default"
-    annotations = {
-      "eks.amazonaws.com/role-arn" = data.aws_iam_policy_document.external_role.json
-    }
-  }
-}
+
+
+
 

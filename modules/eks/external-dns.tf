@@ -65,6 +65,20 @@ resource "helm_release" "external-dns" {
 
   }
 }
+#  create a  serviceaccount with name ebs-csi
+resource "hel_release" "ebs-csi"{
+   depends_on = [null_resource.aws-auth,aws_iam_role_policy.ebs-csi-driver]
+   name = "ebs-csi"
+   repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/"
+   chart = "ebs-csi"
+   version = "v1.42.0"
+   namespace = "default"
+
+   set {
+    name = "serviceAccount.name"
+    value = "ebs-csi"
+   }
+}
 
 
 
