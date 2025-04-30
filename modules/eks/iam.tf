@@ -71,40 +71,7 @@ resource "aws_iam_role_policy_attachment" "node-AmazonEBSCSIDriverPolicy" {
   role       = aws_iam_role.node-role.name
 }
 
-#  EKS cluster should provide permission to External DNS tool to add DNS records in route 53
-resource "aws_iam_policy" "node-external-dns" {
-  name        = "${var.env}-node-external-dns"
-  path        = "/"
-  description = "${var.env}-node-external-dns"
-  policy =  <<EOF
-  {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-
-        "route53:ChangeResourceRecordSets"
-      ],
-      "Resource": [
-        "arn:aws:route53:::hostedzone/Z08520602FC482APPVUI7"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "route53:ListHostedZones",
-        "route53:ListResourceRecordSets",
-        "route53:ListTagsForResource"
-      ],
-      "Resource": [
-        "*"
-      ]
-    }
-  ]
-}
-EOF
-}
+# EKS cluster should provide permission to External DNS tool to add DNS records in route 53
 # attach policy
 resource "aws_iam_role_policy_attachment" "node-externalDNS" {
   role       = aws_iam_role.node-role.name
