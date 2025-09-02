@@ -72,7 +72,8 @@ aws-auth upsert --maproles --rolearn arn:aws:iam::041445559784:role/workstattion
 EOF
   }
 }
-
+# eks addon is a pod identity agent to link both service account and iam role
+# it is just like connection or enable or highlight which two links
 resource "aws_eks_addon" "eks-pod-identity-agent" {
   depends_on                  = [aws_eks_node_group.main]
   cluster_name                = aws_eks_cluster.cluster.name

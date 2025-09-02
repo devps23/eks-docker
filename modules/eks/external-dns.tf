@@ -65,6 +65,17 @@ resource "aws_eks_pod_identity_association" "external--pod-association" {
   service_account = "dns-sa"
   role_arn        = aws_iam_role.external-dns.arn
 }
+resource "kubernetes_service_account" "external_dns" {
+  metadata {
+    name      = "dns-sa"               # 👈 Service account name
+    namespace = "kube-system"          # 👈 Namespace where pods are deployed
+
+    annotations = {
+      "eks.amazonaws.com/role-arn" = aws_iam_role.cluster-role.arn
+      # 👆 Link this SA to IAM Role via IRSA
+    }
+  }
+}
 
 # resource "aws_eks_pod_identity_association" "ebs-csi-driver" {
 #   cluster_name    = aws_eks_cluster.cluster.name
