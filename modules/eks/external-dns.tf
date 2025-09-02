@@ -22,20 +22,6 @@ resource "aws_iam_role" "external-dns" {
 #   the above assume_role_policy is a trust relationships
 }
 
-# resource "aws_iam_role" "ebs-csi" {
-#   name               = "ebc-csi"
-#   assume_role_policy = data.aws_iam_policy_document.external_role.json
-# #   to create a role and attach trust relationship
-# }
-
-
-# resource "aws_iam_role" "auto-scaler" {
-#   name               = "auto-scaler"
-#   assume_role_policy = data.aws_iam_policy_document.external_role.json
-# #   to create a role and attach trust relationship
-# }
-
-
 # create an inline policy and attach role, resource + action
 #  here policy name is "external-dns"
 resource "aws_iam_role_policy" "external_dns_policy" {
@@ -59,37 +45,23 @@ resource "aws_iam_role_policy" "auto-scaler" {
 
 
 #  create pod identity and  attach to cluster
-resource "aws_eks_pod_identity_association" "external--pod-association" {
+resource "aws_eks_pod_identity_association" "external-pod-association" {
   cluster_name    = aws_eks_cluster.cluster.name
   namespace       = "default"
   service_account = "dns-sa"
   role_arn        = aws_iam_role.external-dns.arn
 }
-resource "kubernetes_service_account" "external_dns" {
-  metadata {
-    name      = "dns-sa"               # 👈 Service account name
-    namespace = "kube-system"          # 👈 Namespace where pods are deployed
-
-    annotations = {
-      "eks.amazonaws.com/role-arn" = aws_iam_role.cluster-role.arn
-      # 👆 Link this SA to IAM Role via IRSA
-    }
-  }
-}
-
-# resource "aws_eks_pod_identity_association" "ebs-csi-driver" {
-#   cluster_name    = aws_eks_cluster.cluster.name
-#   namespace       = "default"
-#   service_account = "ebs-csi"
-#   role_arn        = aws_iam_role.external-dns.arn
+# resource "kubernetes_service_account" "external_dns" {
+#   metadata {
+#     name      = "dns-sa"               #  Service account name
+#     namespace = "kube-system"          #  Namespace where pods are deployed
+#
+#     annotations = {
+#       "eks.amazonaws.com/role-arn" = aws_iam_role.cluster-role.arn
+#       # 👆 Link this SA to IAM Role via IRSA
+#     }
+#   }
 # }
-
-resource "aws_eks_pod_identity_association" "auto-scaler" {
-  cluster_name    = aws_eks_cluster.cluster.name
-  namespace       = "default"
-  service_account = "auto-scaler"
-  role_arn        = aws_iam_role.external-dns.arn
-}
 
 #  create a pod and serviceaccount name with external-dns
 resource "helm_release" "external-dns" {
@@ -106,36 +78,8 @@ resource "helm_release" "external-dns" {
 
   }
 }
-#  create a  serviceaccount with name ebs-csi
-resource "helm_release" "ebs-csi"{
-   depends_on     =    [null_resource.aws-auth,aws_iam_role_policy.ebs-csi-driver]
-   name           =   "ebs-csi"
-   repository     =   "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/"
-   chart          =   "ebs-csi"
-   version        =   "v1.42.0"
-   namespace      =   "default"
-
-   set {
-    name          = "serviceAccount.name"
-    value         = "ebs-csi"
-   }
-}
 
 
-# create a  serviceaccount with name auto-scaler
-resource "helm_release" "auto-scaler"{
-   depends_on       =     [null_resource.aws-auth,aws_iam_role_policy.ebs-csi-driver]
-   name             =     "auto-scaler"
-   repository       =     "https://kubernetes.github.io/autoscaler"
-   chart            =     "ebs-csi"
-   version          =      "9.14.0"
-   namespace        =      "default"
-
-   set {
-    name            =      "serviceAccount.name"
-    value           =      "auto-scaler"
-   }
-}
 
 
 
