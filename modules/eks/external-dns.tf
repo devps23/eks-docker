@@ -65,7 +65,7 @@ resource "aws_eks_pod_identity_association" "external--pod-association" {
   service_account = "dns-sa"
   role_arn        = aws_iam_role.external-dns.arn
 }
-resource "kubernetes_service_account" "dns" {
+resource "kubernetes_service_account" "external_dns" {
   metadata {
     name      = "dns-sa"               # Service account name
     namespace = "kube-system"          #  Namespace where pods are deployed
@@ -103,7 +103,7 @@ resource "helm_release" "external-dns" {
   set = {
     "provider"               = "aws"
     "serviceAccount.create"  = "false"
-    "serviceAccount.name"    = kubernetes_service_account.dns.metadata.name
+    "serviceAccount.name"    = "dns-sa"
 
   }
 }
