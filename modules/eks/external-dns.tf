@@ -65,14 +65,14 @@ resource "aws_eks_pod_identity_association" "external--pod-association" {
   service_account = "dns-sa"
   role_arn        = aws_iam_role.external-dns.arn
 }
-resource "kubernetes_service_account" "external_dns" {
+resource "kubernetes_service_account" "dns" {
   metadata {
-    name      = "dns-sa"               # 👈 Service account name
-    namespace = "kube-system"          # 👈 Namespace where pods are deployed
+    name      = "dns-sa"               # Service account name
+    namespace = "kube-system"          #  Namespace where pods are deployed
 
     annotations = {
       "eks.amazonaws.com/role-arn" = aws_iam_role.cluster-role.arn
-      # 👆 Link this SA to IAM Role via IRSA
+      #  Link this SA to IAM Role via IRSA
     }
   }
 }
@@ -100,9 +100,10 @@ resource "helm_release" "external-dns" {
   version    = "1.14.5"
   namespace = "default"
 
-  set {
-    name  = "serviceAccount.name"
-    value = "dns-sa"
+  set = {
+    "provider"               = "aws"
+    "serviceAccount.create"  = "false"
+    "serviceAccount.name"    = kubernetes_service_account.dns.metadata.name
 
   }
 }
